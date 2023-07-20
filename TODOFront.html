@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Task-IT</title>
+    <link rel="shortcut icon" href="./favicon.png" type="image/x-icon">
+    <meta name="description" content="This is just a normal Front end for a Frontend web app developed by Rahul~Bhatt">
+    
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f2f2f2;
+    }
+
+    h1 {
+        text-align: center;
+        color: #00ff0f;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    #taskInput {
+        width: 70%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #05c512;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: .2s all ease;
+    }
+
+    button:hover {
+        background-color: #04a80f;
+    }
+
+    ol {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    li:last-child {
+        border-bottom: none;
+    }
+
+    .remove-button {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .remove-button:hover {
+        background-color: #b02a37;
+    }
+
+    li span {
+        text-align: center;
+        padding: 0 30px;
+
+
+    }
+
+    @media screen and (max-width: 751px) {
+        li span {
+            text-align: justify;
+            padding: 0 20px;
+        }
+    }
+</style>
+
+<body>
+    <h1>To-Do List 📃</h1>
+    <div class="container">
+        <input type="text" id="taskInput" placeholder="Enter your task">
+        <button onclick="addTask()">Add Task</button>
+    </div>
+    <ol id="taskList"></ol>
+
+
+
+
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById("taskInput");
+            const taskText = taskInput.value.trim();
+            const taskList = document.getElementById("taskList");
+            const taskItem = document.createElement("li");
+            const checkbox = document.createElement("input");
+            if (taskText !== "") {
+
+
+                checkbox.type = "checkbox";
+                checkbox.onclick = function () {
+                    markAsCompleted(taskItem, checkbox.checked);
+                };
+
+                // adding input value
+                // taskItem.textContent = taskText;
+                const taskSpan = document.createElement("span");
+                taskSpan.textContent = taskText;
+
+                // remove functionality
+                const removeButton = document.createElement("button");
+                removeButton.textContent = "Remove";
+                removeButton.className = "remove-button";
+
+                // function to remove
+                removeButton.onclick = function () {
+                    taskList.removeChild(taskItem);
+                };
+
+                // implementing changes
+                taskItem.appendChild(checkbox);
+                taskList.appendChild(taskItem);
+
+                taskItem.appendChild(taskSpan);
+                taskItem.appendChild(removeButton);
+
+                // making it empty again
+                taskInput.value = "";
+            } else {
+                alert("Please enter a task."); // if the user submits the empty string
+                return;
+            }
+
+            // Function to mark a task as completed
+            function markAsCompleted(taskItem, completed) {
+                const taskSpan = taskItem.querySelector("span");
+                taskSpan.style.textDecoration = completed ? "line-through" : "none";
+            }
+        }
+
+    </script>
+</body>
+
+</html>
